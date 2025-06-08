@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fj.mapper.ClienteMapper">
+    <resultMap id="clienteResultMap" type="Cliente">
+        <id property="id" column="id"/>
+        <result property="nome" column="nome"/>
+        <result property="cpf" column="cpf"/>
+        <result property="dataCadastro" column="data_cadastro"/>
+    </resultMap>
+
+    <!-- Consulta básica para Cliente -->
+    <select id="findAll" resultMap="clienteResultMap">
+        SELECT id, nome, cpf, data_cadastro
+        FROM clientes
+        ORDER BY data_cadastro DESC;
+    </select>
+
+    <select id="findById" resultMap="clienteResultMap">
+        SELECT id, nome, cpf, data_cadastro
+        FROM clientes
+        WHERE id = #{id};
+    </select>
+
+    <select id="findByCpf" resultMap="clienteResultMap">
+        SELECT id, nome, cpf, data_cadastro
+        FROM clientes
+        WHERE cpf = #{cpf};
+    </select>
+
+    <insert id="insert" parameterType="Cliente" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO clientes(nome, cpf, data_cadastro)
+        VALUES(#{nome}, #{cpf}, #{dataCadastro});
+    </insert>
+
+    <update id="update" parameterType="Cliente">
+        UPDATE clientes
+        SET nome = #{nome},
+            cpf = #{cpf}
+        WHERE id = #{id};
+    </update>
+
+    <delete id="delete" parameterType="Long">
+        DELETE FROM clientes WHERE id = #{id};
+    </delete>
+
+    <!-- Métodos específicos para Cliente -->
+    <select id="findByNome" resultMap="clienteResultMap">
+        SELECT id, nome, cpf, data_cadastro
+        FROM clientes
+        WHERE nome LIKE CONCAT('%', #{nome}, '%')
+        ORDER BY nome;
+    </select>
+
+    <select id="findByDataCadastro" resultMap="clienteResultMap">
+        SELECT id, nome, cpf, data_cadastro
+        FROM clientes
+        WHERE DATE(data_cadastro) = DATE(#{data})
+        ORDER BY data_cadastro DESC;
+    </select>
+</mapper>

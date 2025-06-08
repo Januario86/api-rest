@@ -7,7 +7,6 @@ import javax.ws.rs.core.MediaType;
 public class ClientesController {
 
     @GET
-    @Path("/hello")  // Caminho completo: /api/hello
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
         return "Hello, World!";

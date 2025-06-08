@@ -2,6 +2,7 @@ package org.fj.minhaapi;
 
 
 import org.fj.minhaapi.controller.ClientesController;
+import org.fj.minhaapi.controller.UserController;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -14,6 +15,7 @@ public class RestApplication extends Application {
     public Set<Class<?>> getClasses() {
         Set<Class<?>> classes = new HashSet<>();
         classes.add(ClientesController.class);
+        classes.add(UserController.class);
         return classes;
     }
 }

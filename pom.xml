@@ -14,6 +14,10 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <mybatis.version>3.5.13</mybatis.version>
         <lombok.version>1.18.30</lombok.version>
+        <resteasy.version>3.9.3.Final</resteasy.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -21,7 +25,7 @@
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxrs</artifactId>
-            <version>3.9.3.Final</version>
+            <version>${resteasy.version}</version>
         </dependency>
 
         <!-- API JAX-RS -->
@@ -58,9 +62,32 @@
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Jackson core para serialização JSON -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.14.2</version>
+        </dependency>
+
+        <!-- Suporte do RESTEasy para Jackson -->
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jackson2-provider</artifactId>
+            <version>${resteasy.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
         <finalName>resteasy-exemplo</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>
