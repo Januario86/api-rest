@@ -16,8 +16,6 @@ public class ClientesController {
     @Path("/listar")  // Caminho completo: /api/hello
     @Produces(MediaType.TEXT_PLAIN)
     public String listarClientes() {
-
-
         return "Hello, World!";
     }
 }
