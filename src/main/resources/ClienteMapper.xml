@@ -13,49 +13,49 @@
     <!-- Consulta básica para Cliente -->
     <select id="findAll" resultMap="clienteResultMap">
         SELECT id, nome, cpf, data_cadastro
-        FROM clientes
+        FROM cliente
         ORDER BY data_cadastro DESC;
     </select>
 
     <select id="findById" resultMap="clienteResultMap">
         SELECT id, nome, cpf, data_cadastro
-        FROM clientes
+        FROM cliente
         WHERE id = #{id};
     </select>
 
     <select id="findByCpf" resultMap="clienteResultMap">
         SELECT id, nome, cpf, data_cadastro
-        FROM clientes
+        FROM cliente
         WHERE cpf = #{cpf};
     </select>
 
     <insert id="insert" parameterType="Cliente" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        INSERT INTO clientes(nome, cpf, data_cadastro)
+        INSERT INTO cliente(nome, cpf, data_cadastro)
         VALUES(#{nome}, #{cpf}, #{dataCadastro});
     </insert>
 
     <update id="update" parameterType="Cliente">
-        UPDATE clientes
+        UPDATE cliente
         SET nome = #{nome},
             cpf = #{cpf}
         WHERE id = #{id};
     </update>
 
     <delete id="delete" parameterType="Long">
-        DELETE FROM clientes WHERE id = #{id};
+        DELETE FROM cliente WHERE id = #{id};
     </delete>
 
     <!-- Métodos específicos para Cliente -->
     <select id="findByNome" resultMap="clienteResultMap">
         SELECT id, nome, cpf, data_cadastro
-        FROM clientes
+        FROM cliente
         WHERE nome LIKE CONCAT('%', #{nome}, '%')
         ORDER BY nome;
     </select>
 
     <select id="findByDataCadastro" resultMap="clienteResultMap">
         SELECT id, nome, cpf, data_cadastro
-        FROM clientes
+        FROM cliente
         WHERE DATE(data_cadastro) = DATE(#{data})
         ORDER BY data_cadastro DESC;
     </select>
