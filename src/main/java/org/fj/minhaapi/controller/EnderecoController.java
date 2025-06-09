@@ -25,7 +25,7 @@ public class EnderecoController {
     }
 
     @GET
-    @Path("/endereco")
+    @Path("/enderecos")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarEndereco() {
         List<Endereco> endereco = this.enderecoService.listarEndereco();
@@ -33,7 +33,7 @@ public class EnderecoController {
     }
 
     @POST
-    @Path("/endereco")
+    @Path("/enderecos")
     @Produces(MediaType.APPLICATION_JSON)
     public Response salvarEndereco(EnderecoDto enderecoDto) {
         Endereco enderecoSalvo = this.enderecoService.salvarEndereco(enderecoDto);

@@ -23,6 +23,7 @@
         <mapper resource="UserMapper.xml"/>
         <mapper resource="ClienteMapper.xml"/>
         <mapper resource="RacaMapper.xml"/>
+        <mapper resource="EnderecoMapper.xml"/>
     </mappers>
 </configuration>
 

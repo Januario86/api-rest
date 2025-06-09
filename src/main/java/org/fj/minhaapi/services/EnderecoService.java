@@ -41,6 +41,9 @@ public class EnderecoService {
             novoEndereco.setComplemento(enderecoDto.complemento());
             novoEndereco.setBairro(enderecoDto.bairro());
             novoEndereco.setCidade(enderecoDto.cidade());
+            novoEndereco.setCliente(enderecoDto.cliente());
+            novoEndereco.setLogradouro(enderecoDto.logradouro());
+            novoEndereco.setTag(enderecoDto.tag());
 
             mapper.insert(novoEndereco);
 

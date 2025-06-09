@@ -2,6 +2,7 @@ package org.fj.minhaapi;
 
 
 import org.fj.minhaapi.controller.ClientesController;
+import org.fj.minhaapi.controller.EnderecoController;
 import org.fj.minhaapi.controller.RacaController;
 import org.fj.minhaapi.controller.UserController;
 
@@ -18,6 +19,7 @@ public class RestApplication extends Application {
         classes.add(ClientesController.class);
         classes.add(UserController.class);
         classes.add(RacaController.class);
+        classes.add(EnderecoController.class);
         return classes;
     }
 }

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fj.minhaapi.dao.EnderecoDao">
+    <resultMap id="enderecoResultMap" type="Endereco">
+        <id property="id" column="id"/>
+        <result property="logradouro" column="logradouro"/>
+        <result property="cidade" column="cidade"/>
+        <result property="bairro" column="bairro"/>
+        <result property="complemento" column="complemento"/>
+        <result property="tag" column="tag"/>
+
+        <!-- Many-to-One relationship with Cliente -->
+        <association property="cliente" javaType="Cliente">
+            <id property="id" column="cliente_id"/>
+            <result property="nome" column="cliente_nome"/>
+            <result property="cpf" column="cliente_cpf"/>
+            <result property="dataCadastro" column="cliente_data_cadastro"/>
+        </association>
+    </resultMap>
+
+    <!-- Basic CRUD operations -->
+    <select id="findAll" resultMap="enderecoResultMap">
+        SELECT
+            e.id,
+            e.logradouro,
+            e.cidade,
+            e.bairro,
+            e.complemento,
+            e.tag,
+            c.id as cliente_id,
+            c.nome as cliente_nome,
+            c.cpf as cliente_cpf,
+            c.data_cadastro as cliente_data_cadastro
+        FROM endereco e
+                 JOIN cliente c ON e.cliente_id = c.id
+        ORDER BY e.id DESC;
+    </select>
+
+    <select id="findById" resultMap="enderecoResultMap">
+        SELECT
+            e.id,
+            e.logradouro,
+            e.cidade,
+            e.bairro,
+            e.complemento,
+            e.tag,
+            c.id as cliente_id,
+            c.nome as cliente_nome,
+            c.cpf as cliente_cpf,
+            c.data_cadastro as cliente_data_cadastro
+        FROM endereco e
+                 JOIN cliente c ON e.cliente_id = c.id
+        WHERE e.id = #{id};
+    </select>
+
+    <insert id="insert" parameterType="Endereco" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO endereco(
+            cliente_id,
+            logradouro,
+            cidade,
+            bairro,
+            complemento,
+            tag
+        )
+        VALUES(
+                  #{cliente.id},
+                  #{logradouro},
+                  #{cidade},
+                  #{bairro},
+                  #{complemento},
+                  #{tag}
+              );
+    </insert>
+
+    <update id="update" parameterType="Endereco">
+        UPDATE endereco
+        SET cliente_id = #{cliente.id},
+            logradouro = #{logradouro},
+            cidade = #{cidade},
+            bairro = #{bairro},
+            complemento = #{complemento},
+            tag = #{tag}
+        WHERE id = #{id};
+    </update>
+
+    <delete id="delete" parameterType="Long">
+        DELETE FROM endereco WHERE id = #{id};
+    </delete>
+
+    <!-- Specialized queries -->
+    <select id="findByCliente" resultMap="enderecoResultMap">
+        SELECT
+            e.id,
+            e.logradouro,
+            e.cidade,
+            e.bairro,
+            e.complemento,
+            e.tag,
+            c.id as cliente_id,
+            c.nome as cliente_nome,
+            c.cpf as cliente_cpf,
+            c.data_cadastro as cliente_data_cadastro
+        FROM endereco e
+                 JOIN cliente c ON e.cliente_id = c.id
+        WHERE e.cliente_id = #{clienteId}
+        ORDER BY e.tag;
+    </select>
+
+    <select id="findByCidade" resultMap="enderecoResultMap">
+        SELECT
+            e.id,
+            e.logradouro,
+            e.cidade,
+            e.bairro,
+            e.complemento,
+            e.tag,
+            c.id as cliente_id,
+            c.nome as cliente_nome,
+            c.cpf as cliente_cpf,
+            c.data_cadastro as cliente_data_cadastro
+        FROM endereco e
+                 JOIN cliente c ON e.cliente_id = c.id
+        WHERE e.cidade = #{cidade}
+        ORDER BY c.nome;
+    </select>
+
+    <select id="findByTag" resultMap="enderecoResultMap">
+        SELECT
+            e.id,
+            e.logradouro,
+            e.cidade,
+            e.bairro,
+            e.complemento,
+            e.tag,
+            c.id as cliente_id,
+            c.nome as cliente_nome,
+            c.cpf as cliente_cpf,
+            c.data_cadastro as cliente_data_cadastro
+        FROM endereco e
+                 JOIN cliente c ON e.cliente_id = c.id
+        WHERE e.tag = #{tag}
+        ORDER BY e.id;
+    </select>
+
+    <select id="findByCidadeAndBairro" resultMap="enderecoResultMap">
+        SELECT
+            e.id,
+            e.logradouro,
+            e.cidade,
+            e.bairro,
+            e.complemento,
+            e.tag,
+            c.id as cliente_id,
+            c.nome as cliente_nome,
+            c.cpf as cliente_cpf,
+            c.data_cadastro as cliente_data_cadastro
+        FROM endereco e
+                 JOIN cliente c ON e.cliente_id = c.id
+        WHERE e.cidade = #{cidade} AND e.bairro = #{bairro}
+        ORDER BY c.nome;
+    </select>
+</mapper>
