@@ -3,6 +3,7 @@ package org.fj.minhaapi.model;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 public class Pet {
@@ -12,6 +13,5 @@ public class Pet {
 	private Raca raca;
 
 	private String nome;
-	private LocalDate dataNascimento;
-
+	private Date dataNascimento;
 }

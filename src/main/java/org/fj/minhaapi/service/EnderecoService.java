@@ -1,16 +1,12 @@
-package org.fj.minhaapi.services;
+package org.fj.minhaapi.service;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.fj.minhaapi.config.MyBatisConfig;
-import org.fj.minhaapi.dao.ClienteDao;
 import org.fj.minhaapi.dao.EnderecoDao;
-import org.fj.minhaapi.dto.ClienteDto;
 import org.fj.minhaapi.dto.EnderecoDto;
-import org.fj.minhaapi.model.Cliente;
 import org.fj.minhaapi.model.Endereco;
 
-import java.util.Date;
 import java.util.List;
 
 public class EnderecoService {

@@ -1,10 +1,7 @@
 package org.fj.minhaapi;
 
 
-import org.fj.minhaapi.controller.ClientesController;
-import org.fj.minhaapi.controller.EnderecoController;
-import org.fj.minhaapi.controller.RacaController;
-import org.fj.minhaapi.controller.UserController;
+import org.fj.minhaapi.rest.*;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -16,10 +13,14 @@ public class RestApplication extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> classes = new HashSet<>();
-        classes.add(ClientesController.class);
-        classes.add(UserController.class);
-        classes.add(RacaController.class);
-        classes.add(EnderecoController.class);
+        classes.add(ClientesRest.class);
+        classes.add(UserRest.class);
+        classes.add(RacaRest.class);
+        classes.add(EnderecoRest.class);
+        classes.add(AtendimentoRest.class);
+        classes.add(PetRest.class);
+        classes.add(JacksonConfig.class);
+
         return classes;
     }
 }

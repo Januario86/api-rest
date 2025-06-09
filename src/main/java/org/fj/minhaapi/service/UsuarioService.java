@@ -1,4 +1,4 @@
-package org.fj.minhaapi.services;
+package org.fj.minhaapi.service;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;

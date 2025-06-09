@@ -1,8 +1,8 @@
-package org.fj.minhaapi.controller;
+package org.fj.minhaapi.rest;
 
 import org.fj.minhaapi.dto.RacaDto;
 import org.fj.minhaapi.model.Raca;
-import org.fj.minhaapi.services.RacaService;
+import org.fj.minhaapi.service.RacaService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -11,11 +11,11 @@ import java.net.URI;
 import java.util.List;
 
 @Path("/api")
-public class RacaController {
+public class RacaRest {
 
     private RacaService racaService;
 
-    public RacaController(){
+    public RacaRest(){
         this.racaService = new RacaService();
     }
 

@@ -24,6 +24,8 @@
         <mapper resource="ClienteMapper.xml"/>
         <mapper resource="RacaMapper.xml"/>
         <mapper resource="EnderecoMapper.xml"/>
+        <mapper resource="AtendimentoMapper.xml"/>
+        <mapper resource="PetMapper.xml"/>
     </mappers>
 </configuration>
 

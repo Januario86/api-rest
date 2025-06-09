@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fj.minhaapi.dao.AtendimentoDao">
+    <resultMap id="atendimentoResultMap" type="Atendimento">
+        <id property="id" column="atendimento_id"/>
+        <result property="descricaoAtendimento" column="descricao_atendimento"/>
+        <result property="valor" column="valor"/>
+        <result property="data" column="data_atendimento"/>
+
+        <!-- Relacionamento Many-to-One com Pet -->
+        <association property="pet" javaType="Pet">
+            <id property="id" column="pet_id"/>
+            <result property="nome" column="pet_nome"/>
+            <result property="dataNascimento" column="pet_data_nascimento"/>
+
+            <!-- Relacionamento Many-to-One com Cliente dentro de Pet -->
+            <association property="cliente" javaType="Cliente">
+                <id property="id" column="cliente_id"/>
+                <result property="nome" column="cliente_nome"/>
+            </association>
+
+            <!-- Relacionamento Many-to-One com Raca dentro de Pet -->
+            <association property="raca" javaType="Raca">
+                <id property="id" column="raca_id"/>
+                <result property="descricao" column="raca_descricao"/>
+            </association>
+        </association>
+    </resultMap>
+
+    <!-- Consulta básica para Atendimento -->
+    <select id="findAll" resultMap="atendimentoResultMap">
+        SELECT
+            a.id as atendimento_id,
+            a.descricao_atendimento,
+            a.valor,
+            a.data_atendimento,
+
+            p.id as pet_id,
+            p.nome as pet_nome,
+            p.data_nascimento as pet_data_nascimento,
+
+            c.id as cliente_id,
+            c.nome as cliente_nome,
+
+            r.id as raca_id,
+            r.descricao as raca_descricao
+        FROM atendimento a
+                 LEFT JOIN pets p ON a.pet_id = p.id
+                 LEFT JOIN clientes c ON p.cliente_id = c.id
+                 LEFT JOIN racas r ON p.raca_id = r.id
+        ORDER BY a.data_atendimento DESC;
+    </select>
+
+    <select id="findById" resultMap="atendimentoResultMap">
+        SELECT
+            a.id as atendimento_id,
+            a.descricao_atendimento,
+            a.valor,
+            a.data_atendimento,
+
+            p.id as pet_id,
+            p.nome as pet_nome,
+            p.data_nascimento as pet_data_nascimento,
+
+            c.id as cliente_id,
+            c.nome as cliente_nome,
+
+            r.id as raca_id,
+            r.descricao as raca_descricao
+        FROM atendimento a
+                 LEFT JOIN pets p ON a.pet_id = p.id
+                 LEFT JOIN clientes c ON p.cliente_id = c.id
+                 LEFT JOIN racas r ON p.raca_id = r.id
+        WHERE a.id = #{id};
+    </select>
+
+    <insert id="insert" parameterType="Atendimento" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO atendimento(pet_id, descricao_atendimento, valor, data_atendimento)
+        VALUES(#{pet.id}, #{descricaoAtendimento}, #{valor}, #{data});
+    </insert>
+
+    <update id="update" parameterType="Atendimento">
+        UPDATE atendimento
+        SET pet_id = #{pet.id},
+            descricao_atendimento = #{descricaoAtendimento},
+            valor = #{valor},
+            data_atendimento = #{data}
+        WHERE id = #{id};
+    </update>
+
+    <delete id="delete" parameterType="Long">
+        DELETE FROM atendimento WHERE id = #{id};
+    </delete>
+
+    <!-- Métodos específicos para Atendimento -->
+    <select id="findByPet" resultMap="atendimentoResultMap">
+        SELECT
+            a.id as atendimento_id,
+            a.descricao_atendimento,
+            a.valor,
+            a.data_atendimento,
+
+            p.id as pet_id,
+            p.nome as pet_nome,
+            p.data_nascimento as pet_data_nascimento,
+
+            c.id as cliente_id,
+            c.nome as cliente_nome,
+
+            r.id as raca_id,
+            r.descricao as raca_descricao
+        FROM atendimento a
+                 LEFT JOIN pets p ON a.pet_id = p.id
+                 LEFT JOIN clientes c ON p.cliente_id = c.id
+                 LEFT JOIN racas r ON p.raca_id = r.id
+        WHERE a.pet_id = #{petId}
+        ORDER BY a.data_atendimento DESC;
+    </select>
+
+    <select id="findByCliente" resultMap="atendimentoResultMap">
+        SELECT
+            a.id as atendimento_id,
+            a.descricao_atendimento,
+            a.valor,
+            a.data_atendimento,
+
+            p.id as pet_id,
+            p.nome as pet_nome,
+            p.data_nascimento as pet_data_nascimento,
+
+            c.id as cliente_id,
+            c.nome as cliente_nome,
+
+            r.id as raca_id,
+            r.descricao as raca_descricao
+        FROM atendimento a
+                 LEFT JOIN pets p ON a.pet_id = p.id
+                 LEFT JOIN clientes c ON p.cliente_id = c.id
+                 LEFT JOIN racas r ON p.raca_id = r.id
+        WHERE p.cliente_id = #{clienteId}
+        ORDER BY a.data_atendimento DESC;
+    </select>
+
+    <select id="findByData" resultMap="atendimentoResultMap">
+        SELECT
+            a.id as atendimento_id,
+            a.descricao_atendimento,
+            a.valor,
+            a.data_atendimento,
+
+            p.id as pet_id,
+            p.nome as pet_nome,
+            p.data_nascimento as pet_data_nascimento,
+
+            c.id as cliente_id,
+            c.nome as cliente_nome,
+
+            r.id as raca_id,
+            r.descricao as raca_descricao
+        FROM atendimento a
+                 LEFT JOIN pets p ON a.pet_id = p.id
+                 LEFT JOIN clientes c ON p.cliente_id = c.id
+                 LEFT JOIN racas r ON p.raca_id = r.id
+        WHERE a.data_atendimento = #{data}
+        ORDER BY a.data_atendimento DESC;
+    </select>
+</mapper>

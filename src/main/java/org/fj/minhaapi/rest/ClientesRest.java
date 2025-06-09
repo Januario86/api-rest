@@ -1,8 +1,10 @@
-package org.fj.minhaapi.controller;
+package org.fj.minhaapi.rest;
 
 import org.fj.minhaapi.dto.ClienteDto;
+import org.fj.minhaapi.mapper.ClienteMapper;
 import org.fj.minhaapi.model.Cliente;
-import org.fj.minhaapi.services.ClienteService;
+import org.fj.minhaapi.response.ClienteResponse;
+import org.fj.minhaapi.service.ClienteService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,11 +16,11 @@ import java.net.URI;
 import java.util.List;
 
 @Path("/api")
-public class ClientesController {
+public class ClientesRest {
 
     private ClienteService clienteService;
 
-    public ClientesController(){
+    public ClientesRest(){
         this.clienteService = new ClienteService();
     }
 
@@ -35,11 +37,12 @@ public class ClientesController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response salvarCliente(ClienteDto clienteDTO) {
         Cliente clienteSalvo = this.clienteService.salvarCliente(clienteDTO);
+        ClienteResponse response = ClienteMapper.toResponse(clienteSalvo);
 
         URI location = URI.create("/api/clientes/" + clienteSalvo.getId());
         return Response
                 .created(location)
-                .entity(clienteSalvo)
+                .entity(response)
                 .build();
     }
 }

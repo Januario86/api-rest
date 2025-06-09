@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fj.minhaapi.dao.PetDao">
+    <resultMap id="petResultMap" type="Pet">
+        <id property="id" column="id"/>
+        <result property="nome" column="nome"/>
+        <result property="dataNascimento" column="data_nascimento"/>
+
+        <!-- Many-to-One relationship with Cliente -->
+        <association property="cliente" javaType="Cliente">
+            <id property="id" column="cliente_id"/>
+            <result property="nome" column="cliente_nome"/>
+            <result property="cpf" column="cliente_cpf"/>
+            <result property="dataCadastro" column="cliente_data_cadastro"/>
+        </association>
+
+        <!-- Many-to-One relationship with Raca -->
+        <association property="raca" javaType="Raca">
+            <id property="id" column="raca_id"/>
+            <result property="descricao" column="raca_descricao"/>
+        </association>
+    </resultMap>
+
+    <!-- Basic CRUD operations -->
+    <select id="findAll" resultMap="petResultMap">
+        SELECT
+            p.id,
+            p.nome,
+            p.data_nascimento,
+            c.id as cliente_id,
+            c.nome as cliente_nome,
+            c.cpf as cliente_cpf,
+            c.data_cadastro as cliente_data_cadastro,
+            r.id as raca_id,
+            r.descricao as raca_descricao
+        FROM pet p
+                 JOIN cliente c ON p.cliente_id = c.id
+                 JOIN raca r ON p.raca_id = r.id
+        ORDER BY p.nome;
+    </select>
+
+    <select id="findById" resultMap="petResultMap">
+        SELECT
+            p.id,
+            p.nome,
+            p.data_nascimento,
+            c.id as cliente_id,
+            c.nome as cliente_nome,
+            c.cpf as cliente_cpf,
+            c.data_cadastro as cliente_data_cadastro,
+            r.id as raca_id,
+            r.descricao as raca_descricao
+        FROM pet p
+                 JOIN cliente c ON p.cliente_id = c.id
+                 JOIN raca r ON p.raca_id = r.id
+        WHERE p.id = #{id};
+    </select>
+
+    <insert id="insert" parameterType="Pet" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO pet(
+            cliente_id,
+            raca_id,
+            nome,
+            data_nascimento
+        )
+        VALUES(
+                  #{cliente.id},
+                  #{raca.id},
+                  #{nome},
+                  #{dataNascimento}
+              );
+    </insert>
+
+    <update id="update" parameterType="Pet">
+        UPDATE pet
+        SET cliente_id = #{cliente.id},
+            raca_id = #{raca.id},
+            nome = #{nome},
+            data_nascimento = #{dataNascimento}
+        WHERE id = #{id};
+    </update>
+
+    <delete id="delete" parameterType="Long">
+        DELETE FROM pet WHERE id = #{id};
+    </delete>
+
+    <!-- Specialized queries -->
+    <select id="findByCliente" resultMap="petResultMap">
+        SELECT
+            p.id,
+            p.nome,
+            p.data_nascimento,
+            c.id as cliente_id,
+            c.nome as cliente_nome,
+            c.cpf as cliente_cpf,
+            c.data_cadastro as cliente_data_cadastro,
+            r.id as raca_id,
+            r.descricao as raca_descricao
+        FROM pet p
+                 JOIN clientes c ON p.cliente_id = c.id
+                 JOIN racas r ON p.raca_id = r.id
+        WHERE p.cliente_id = #{clienteId}
+        ORDER BY p.nome;
+    </select>
+
+    <select id="findByRaca" resultMap="petResultMap">
+        SELECT
+            p.id,
+            p.nome,
+            p.data_nascimento,
+            c.id as cliente_id,
+            c.nome as cliente_nome,
+            c.cpf as cliente_cpf,
+            c.data_cadastro as cliente_data_cadastro,
+            r.id as raca_id,
+            r.descricao as raca_descricao
+        FROM pet p
+                 JOIN cliente c ON p.cliente_id = c.id
+                 JOIN raca r ON p.raca_id = r.id
+        WHERE p.raca_id = #{racaId}
+        ORDER BY p.nome;
+    </select>
+
+    <select id="findByNome" resultMap="petResultMap">
+        SELECT
+            p.id,
+            p.nome,
+            p.data_nascimento,
+            c.id as cliente_id,
+            c.nome as cliente_nome,
+            c.cpf as cliente_cpf,
+            c.data_cadastro as cliente_data_cadastro,
+            r.id as raca_id,
+            r.descricao as raca_descricao
+        FROM pet p
+                 JOIN cliente c ON p.cliente_id = c.id
+                 JOIN raca r ON p.raca_id = r.id
+        WHERE p.nome LIKE CONCAT('%', #{nome}, '%')
+        ORDER BY p.nome;
+    </select>
+
+    <select id="findByDataNascimento" resultMap="petResultMap">
+        SELECT
+            p.id,
+            p.nome,
+            p.data_nascimento,
+            c.id as cliente_id,
+            c.nome as cliente_nome,
+            c.cpf as cliente_cpf,
+            c.data_cadastro as cliente_data_cadastro,
+            r.id as raca_id,
+            r.descricao as raca_descricao
+        FROM pet p
+                 JOIN cliente c ON p.cliente_id = c.id
+                 JOIN raca r ON p.raca_id = r.id
+        WHERE p.data_nascimento = #{dataNascimento}
+        ORDER BY p.nome;
+    </select>
+</mapper>

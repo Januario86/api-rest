@@ -1,10 +1,10 @@
-package org.fj.minhaapi.services;
+package org.fj.minhaapi.service;
 
-import org.fj.minhaapi.dto.RacaDto;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.fj.minhaapi.config.MyBatisConfig;
 import org.fj.minhaapi.dao.RacaDao;
+import org.fj.minhaapi.dto.RacaDto;
 import org.fj.minhaapi.model.Raca;
 
 import java.util.List;

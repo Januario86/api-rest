@@ -1,10 +1,8 @@
-package org.fj.minhaapi.controller;
+package org.fj.minhaapi.rest;
 
 import org.fj.minhaapi.dto.EnderecoDto;
-import org.fj.minhaapi.dto.RacaDto;
 import org.fj.minhaapi.model.Endereco;
-import org.fj.minhaapi.model.Raca;
-import org.fj.minhaapi.services.EnderecoService;
+import org.fj.minhaapi.service.EnderecoService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -16,11 +14,11 @@ import java.net.URI;
 import java.util.List;
 
 @Path("/api")
-public class EnderecoController {
+public class EnderecoRest {
 
     private EnderecoService enderecoService;
 
-    public EnderecoController(){
+    public EnderecoRest(){
         this.enderecoService = new EnderecoService();
     }
 
