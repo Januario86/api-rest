@@ -1,27 +1,25 @@
 package org.fj.minhaapi.services;
 
-import org.fj.minhaapi.dto.ClienteDto;
+import org.fj.minhaapi.dto.RacaDto;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.fj.minhaapi.config.MyBatisConfig;
-import org.fj.minhaapi.dao.ClienteDao;
-import org.fj.minhaapi.model.Cliente;
+import org.fj.minhaapi.dao.RacaDao;
+import org.fj.minhaapi.model.Raca;
 
-import java.util.Date;
 import java.util.List;
 
-public class ClienteService {
-
+public class RacaService {
     SqlSessionFactory sqlSessionFactory = MyBatisConfig.getSqlSessionFactory();
 
-    public List<Cliente> listarCliente() {
+    public List<Raca> listarRaca() {
         try {
             SqlSession session = sqlSessionFactory.openSession();
-           ClienteDao mapper = session.getMapper(ClienteDao.class);
+            RacaDao mapper = session.getMapper(RacaDao.class);
 
-            List<Cliente> clientes = mapper.findAll();
+            List<Raca> raca = mapper.findAll();
             session.close();
-            return clientes;
+            return raca;
         } catch (Exception e) {
             e.printStackTrace();
             e.getMessage();
@@ -29,25 +27,23 @@ public class ClienteService {
         return List.of();
     }
 
-    public Cliente salvarCliente(ClienteDto cliente) {
+    public Raca salvarRaca(RacaDto racaDTO) {
         try {
             SqlSession session = sqlSessionFactory.openSession();
-            ClienteDao mapper = session.getMapper(ClienteDao.class);
+            RacaDao mapper = session.getMapper(RacaDao.class);
 
-            Cliente novoCliente = new Cliente();
-            novoCliente.setNome(cliente.nome());
-            novoCliente.setCpf(cliente.cpf());
-            novoCliente.setDataCadastro(new Date());
-
-            mapper.insert(novoCliente);
+            Raca novaRaca = new Raca();
+            novaRaca.setDescricao(racaDTO.descricao());
+            mapper.insert(novaRaca);
 
             session.commit();
             session.close();
-            return novoCliente;
+            return novaRaca;
         } catch (Exception e) {
             e.printStackTrace();
             e.getMessage();
         }
-      return null;
+        return null;
     }
+
 }

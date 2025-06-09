@@ -1,27 +1,30 @@
 package org.fj.minhaapi.services;
 
-import org.fj.minhaapi.dto.ClienteDto;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.fj.minhaapi.config.MyBatisConfig;
 import org.fj.minhaapi.dao.ClienteDao;
+import org.fj.minhaapi.dao.EnderecoDao;
+import org.fj.minhaapi.dto.ClienteDto;
+import org.fj.minhaapi.dto.EnderecoDto;
 import org.fj.minhaapi.model.Cliente;
+import org.fj.minhaapi.model.Endereco;
 
 import java.util.Date;
 import java.util.List;
 
-public class ClienteService {
+public class EnderecoService {
 
     SqlSessionFactory sqlSessionFactory = MyBatisConfig.getSqlSessionFactory();
 
-    public List<Cliente> listarCliente() {
+    public List<Endereco> listarEndereco() {
         try {
             SqlSession session = sqlSessionFactory.openSession();
-           ClienteDao mapper = session.getMapper(ClienteDao.class);
+            EnderecoDao mapper = session.getMapper(EnderecoDao.class);
 
-            List<Cliente> clientes = mapper.findAll();
+            List<Endereco> enderecos = mapper.findAll();
             session.close();
-            return clientes;
+            return enderecos;
         } catch (Exception e) {
             e.printStackTrace();
             e.getMessage();
@@ -29,25 +32,31 @@ public class ClienteService {
         return List.of();
     }
 
-    public Cliente salvarCliente(ClienteDto cliente) {
+    public Endereco salvarEndereco(EnderecoDto enderecoDto) {
         try {
             SqlSession session = sqlSessionFactory.openSession();
-            ClienteDao mapper = session.getMapper(ClienteDao.class);
+            EnderecoDao mapper = session.getMapper(EnderecoDao.class);
 
-            Cliente novoCliente = new Cliente();
-            novoCliente.setNome(cliente.nome());
-            novoCliente.setCpf(cliente.cpf());
-            novoCliente.setDataCadastro(new Date());
+            Endereco novoEndereco = new Endereco();
+            novoEndereco.setComplemento(enderecoDto.complemento());
+            novoEndereco.setBairro(enderecoDto.bairro());
+            novoEndereco.setCidade(enderecoDto.cidade());
 
-            mapper.insert(novoCliente);
+            mapper.insert(novoEndereco);
 
             session.commit();
             session.close();
-            return novoCliente;
+            return novoEndereco;
         } catch (Exception e) {
             e.printStackTrace();
             e.getMessage();
         }
-      return null;
+        return null;
     }
+
+
+
+
+
+
 }
