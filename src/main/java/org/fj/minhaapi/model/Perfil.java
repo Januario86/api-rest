@@ -2,8 +2,8 @@ package org.fj.minhaapi.model;
 
 public enum Perfil {
 
-	 CLIENTE,
-	 ADMIN;
+	ADMIN,
+	USUARIO;
 	
 	public String getRole() {
         return "ROLE_" + this.name();

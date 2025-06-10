@@ -1,14 +1,11 @@
-package org.fj.minhaapi.model;
+package org.fj.minhaapi.response;
 
-import lombok.Data;
+import org.fj.minhaapi.model.Perfil;
 
-@Data
-public class Usuario {
-
+public class UsuarioResponse {
     private Long id;
     private String login;
     private String senha;
-    private String nome;
     private String email;
     private Perfil perfil;
 

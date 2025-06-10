@@ -2,6 +2,7 @@ package org.fj.minhaapi;
 
 
 import org.fj.minhaapi.rest.*;
+import org.fj.minhaapi.rest.filter.LogFilter;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -20,7 +21,7 @@ public class RestApplication extends Application {
         classes.add(AtendimentoRest.class);
         classes.add(PetRest.class);
         classes.add(JacksonConfig.class);
-
+        classes.add(LogFilter.class);
         return classes;
     }
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fj.minhaapi.dao.UsuarioDao">
+
+    <!-- Resultado mapeado para a classe Usuario -->
+    <resultMap id="usuarioResultMap" type="Usuario">
+        <id property="id" column="id"/>
+        <result property="login" column="login"/>
+        <result property="senha" column="senha"/>
+        <result property="perfil" column="perfil"/>
+        <result property="nome" column="nome"/>
+        <result property="email" column="email"/>
+    </resultMap>
+
+    <!-- Buscar todos os usuários -->
+    <select id="findAll" resultMap="usuarioResultMap">
+        SELECT * FROM usuario;
+    </select>
+
+    <!-- Buscar usuário por ID -->
+    <select id="findById" parameterType="long" resultMap="usuarioResultMap">
+        SELECT * FROM usuario WHERE id = #{id};
+    </select>
+
+    <!-- Buscar usuário por login (para autenticação) -->
+    <select id="findByLogin" parameterType="string" resultMap="usuarioResultMap">
+        SELECT * FROM usuario WHERE login = #{login};
+    </select>
+
+    <!-- Inserir novo usuário -->
+    <insert id="insert" parameterType="Usuario" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO usuario (login, senha, nome, perfil, email)
+        VALUES (#{login}, #{senha}, #{nome}, #{perfil}, #{email});
+    </insert>
+
+    <!-- Atualizar usuário -->
+    <update id="update" parameterType="Usuario">
+        UPDATE usuario
+        SET login = #{login},
+            senha = #{senha},
+            nome = #{nome},
+            perfil =#{perfil},
+            email = #{email}
+        WHERE id = #{id};
+    </update>
+
+    <!-- Remover usuário -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM usuario WHERE id = #{id};
+    </delete>
+
+</mapper>

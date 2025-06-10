@@ -1,9 +1,11 @@
 package org.fj.minhaapi.rest;
 
+import org.fj.minhaapi.dto.CredenciaisDto;
 import org.fj.minhaapi.model.User;
 import org.fj.minhaapi.service.UsuarioService;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -24,5 +26,16 @@ public class UserRest {
     public Response listarUsuarios() {
         List<User> usuarios = this.usuarioService.listarUsuarios();
         return Response.ok(usuarios).build();
+    }
+
+    @POST
+    @Path("/login")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response login(CredenciaisDto credenciaisDto) {
+       var usuario = this.usuarioService.login(credenciaisDto);
+//        if (usuario == null || !credenciaisDto.getSenha(), usuario.getSenhaHash())) {
+//            return Response.status(Response.Status.UNAUTHORIZED).build();
+//        }
+        return Response.ok(usuario).build();
     }
 }

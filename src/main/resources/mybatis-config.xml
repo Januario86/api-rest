@@ -26,6 +26,7 @@
         <mapper resource="EnderecoMapper.xml"/>
         <mapper resource="AtendimentoMapper.xml"/>
         <mapper resource="PetMapper.xml"/>
+        <mapper resource="UsuarioMapper.xml"/>
     </mappers>
 </configuration>
 
