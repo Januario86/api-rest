@@ -13,6 +13,5 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target({ ElementType.TYPE, ElementType.METHOD })
 public @interface Autorizacao {
-
     Perfil perfil();
 }
